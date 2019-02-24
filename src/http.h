@@ -5,12 +5,6 @@
  *      Author: melchi
  */
 
-#define true 1
-#define false 0
-#define SUCCESS 0
-#define FAILURE -1
-#define BUFFER_SIZE 1024
-
 struct http_request{
 	char *path;
 	int version_id;

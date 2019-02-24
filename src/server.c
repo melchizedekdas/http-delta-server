@@ -1,6 +1,8 @@
+#include <stdio.h>
 #include "tcp_socket.h"
 #include "http.h"
 #include "http_response.h"
+#include "constants.h"
 
 #define PORT 8080
 

@@ -8,6 +8,7 @@
 #include "http.h"
 #include "http_response.h"
 #include "resource.h"
+#include "constants.h"
 
 #define RESOURCE_FOUND 200
 #define SAME_VERSION 201
