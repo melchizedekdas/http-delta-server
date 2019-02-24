@@ -12,7 +12,7 @@ int create_socket(int port_no);
 int listen_for_request(int server_socket);
 
 //returns the number of bytes transmitted, or -1 on failure
-int recv_request(int client_socket, char *recv_data);
+int recv_request(int client_socket, char *recv_data, int buffer_size);
 
 //returns the number of bytes received, or -1 on failure.
 int send_response(int client_socket, char *send_data);

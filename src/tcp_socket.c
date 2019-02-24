@@ -64,8 +64,8 @@ int listen_for_request(int server_socket){
 	return conn;
 }
 
-int recv_request(int client_socket, char *recv_data){
-	return recv(client_socket, recv_data, BUFFER_SIZE, 0);
+int recv_request(int client_socket, char *recv_data, int buffer_size){
+	return recv(client_socket, recv_data, buffer_size, 0);
 }
 
 int send_response(int client_socket, char *send_data){
