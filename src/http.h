@@ -7,7 +7,7 @@
 
 struct http_request{
 	char *path;
-	int version_id;
+	char *version_id;
 	short accept_parts;
 };
 
