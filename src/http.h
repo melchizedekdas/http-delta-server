@@ -5,16 +5,20 @@
  *      Author: melchi
  */
 
+#define RESOURCE_FOUND "200"
+#define SAME_VERSION "304"
+#define PARTS_FOUND "226"
+#define RESOURCE_NOT_FOUND "404"
+#define BAD_REQUEST "400"
+
 struct http_request{
-	char *path;
-	char *version_id;
+	char *path, *version_id;
 	short accept_parts;
 };
 
 struct http_response{
-	int version_id, status_code;
-	short same_version, parts;
-	char *body;
+	char *version_id, *status_code, *body;
+	int content_length;
 };
 
 //returns success or error code
