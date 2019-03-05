@@ -11,13 +11,13 @@
 #include "constants.h"
 
 int process_request(struct http_request *request, struct http_response *response){
-	int current_version_id=get_current_version_id(request->path);
-	if(current_version_id==FAILURE){
+	char * current_version_id=get_current_version_id(request->path);
+	if(!current_version_id){
 		//Resource not found
 		response->status_code=RESOURCE_NOT_FOUND;
 		return SUCCESS;
 	}
-	if(current_version_id==request->version_id){
+	if(!strcmp(current_version_id,request->version_id)){
 		//same version as client cache
 		response->status_code=SAME_VERSION;
 		return SUCCESS;

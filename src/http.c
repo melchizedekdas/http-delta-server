@@ -13,7 +13,7 @@
 #define COLON ":"
 #define SPACE " "
 #define HEADER_DELIM ": "
-#define ENCODING_DELIM ": "
+#define ENCODING_DELIM ", "
 #define GET "GET"
 #define HTTP_V "HTTP/1.1"
 #define VERSION_ID_REQ "If-None-Match"
@@ -79,19 +79,19 @@ char *strcpy_return_end(char *dest, char *source){
 	return dest+i;
 }
 char *status_msg(char *status_code){
-	if(strcmp(status_code,RESOURCE_FOUND)){
+	if(!strcmp(status_code,RESOURCE_FOUND)){
 		return "OK";
 	}
-	else if(strcmp(status_code,SAME_VERSION)){
+	else if(!strcmp(status_code,SAME_VERSION)){
 		return "Not Modified";
 	}
-	else if(strcmp(status_code,PARTS_FOUND)){
+	else if(!strcmp(status_code,PARTS_FOUND)){
 		return "Delta Encoding";
 	}
-	else if(strcmp(status_code,RESOURCE_NOT_FOUND)){
+	else if(!strcmp(status_code,RESOURCE_NOT_FOUND)){
 		return "Not found";
 	}
-	else if(strcmp(status_code,BAD_REQUEST)){
+	else if(!strcmp(status_code,BAD_REQUEST)){
 		return "Bad request";
 	}
 	else{
@@ -107,7 +107,7 @@ int generate_response(struct http_response *response, char *response_data){
 	response_ptr=strcpy_return_end(response_ptr,status_msg(status_code));
 	response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
 
-	if(strcmp(status_code,RESOURCE_FOUND)){
+	if(!strcmp(status_code,RESOURCE_FOUND)){
 		//Content length header
 		response_ptr=strcpy_return_end(response_ptr,CONTENT_LENGTH);
 		response_ptr=strcpy_return_end(response_ptr,COLON);
@@ -127,10 +127,10 @@ int generate_response(struct http_response *response, char *response_data){
 		response_ptr=strcpy_return_end(response_ptr,response->body);
 		*response_ptr=0;
 	}
-	else if(strcmp(status_code,SAME_VERSION)){
+	else if(!strcmp(status_code,SAME_VERSION)){
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
 	}
-	else if(strcmp(status_code,PARTS_FOUND)){
+	else if(!strcmp(status_code,PARTS_FOUND)){
 		//Content length header
 		response_ptr=strcpy_return_end(response_ptr,CONTENT_LENGTH);
 		response_ptr=strcpy_return_end(response_ptr,COLON);
@@ -150,10 +150,10 @@ int generate_response(struct http_response *response, char *response_data){
 		response_ptr=strcpy_return_end(response_ptr,response->body);
 		*response_ptr=0;
 	}
-	else if(strcmp(status_code,RESOURCE_NOT_FOUND)){
+	else if(!strcmp(status_code,RESOURCE_NOT_FOUND)){
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
 	}
-	else if(strcmp(status_code,BAD_REQUEST)){
+	else if(!strcmp(status_code,BAD_REQUEST)){
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
 	}
 	else{
