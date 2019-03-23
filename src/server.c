@@ -11,7 +11,7 @@
 #include "http_response.h"
 #include "constants.h"
 
-#define PORT 8080
+#define SERVER_PORT 8080
 
 int main(){
 	int server_socket, client_socket, bytes_received;
@@ -19,7 +19,7 @@ int main(){
 	struct http_request request;
 	struct http_response response;
 
-	server_socket=create_socket(PORT);
+	server_socket=create_socket(SERVER_PORT);
 	while(true){
 		//Infinite loop
 		client_socket=listen_for_request(server_socket);

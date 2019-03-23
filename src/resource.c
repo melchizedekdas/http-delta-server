@@ -30,7 +30,7 @@ char *get_current_version_id(char *resource_path){
 	strcat(file_path,resource_path);
 	strcat(file_path,META_SUFFIX);
 	strcat(file_path,META_EXTENSION);
-	FILE *fptr = fopen(resource_path, "r");
+	FILE *fptr = fopen(file_path, "r");
 	if (fptr == NULL)
 	{
 		return NULL;
@@ -57,7 +57,7 @@ int get_resource(char *resource_path, char *resource_data){
 	strcpy(file_path,RESOURCES_PREFIX);
 	strcat(file_path,resource_path);
 	strcat(file_path,RESOURCE_EXTENSION);
-	FILE *fptr = fopen(resource_path, "r");
+	FILE *fptr = fopen(file_path, "r");
 	if (fptr == NULL)
 	{
 		return FAILURE;
@@ -80,7 +80,7 @@ int get_resource_parts(char *resource_path, char *cached_version_id, char *resou
 	strcat(file_path,VERSION_ID_SEPARATOR);
 	strcat(file_path,cached_version_id);
 	strcat(file_path,DELTA_EXTENSION);
-	FILE *fptr = fopen(resource_path, "r");
+	FILE *fptr = fopen(file_path, "r");
 	if (fptr == NULL)
 	{
 		return FAILURE;
