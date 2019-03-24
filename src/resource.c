@@ -68,6 +68,7 @@ int get_resource(char *resource_path, char *resource_data){
 		chars_read+=strlen(resource_content+chars_read);
 	}
 	fclose(fptr);
+	resource_data=resource_content;
 	return chars_read;
 }
 
@@ -91,5 +92,6 @@ int get_resource_parts(char *resource_path, char *cached_version_id, char *resou
 		chars_read+=strlen(resource_content+chars_read);
 	}
 	fclose(fptr);
+	resource_data=resource_content;
 	return chars_read;
 }
