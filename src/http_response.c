@@ -9,6 +9,7 @@
 #include "http_response.h"
 #include "resource.h"
 #include "constants.h"
+#include <string.h>
 
 int process_request(struct http_request *request, struct http_response *response){
 	char * current_version_id=get_current_version_id(request->path);
@@ -23,7 +24,7 @@ int process_request(struct http_request *request, struct http_response *response
 		return SUCCESS;
 	}
 
-	char *resource_data[BUFFER_SIZE];
+	char resource_data[BUFFER_SIZE];
 	if((request->accept_parts==true)&&((response->content_length=get_resource_parts(request->path, request->version_id, resource_data))>=0)){
 		//fetched parts resource
 		response->version_id=current_version_id;

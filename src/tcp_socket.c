@@ -15,13 +15,14 @@
 #include "time.h"
 #include "dirent.h"
 #include "netdb.h"
+#include <arpa/inet.h>
 
 #define MAX_CONN 5
 
 int create_socket(int port_no){
 	int sockfd;
 	struct sockaddr_in addr;
-	struct hostent * host_ent;
+	struct hostent *host_ent;
 	char * hostAddr;
 
 	memset(&addr, 0, sizeof(addr));
@@ -45,7 +46,7 @@ int listen_for_request(int server_socket){
 	int conn;
 	char hostip[32];
 	struct sockaddr_in addr;
-	struct hostent * host;
+	struct hostent *host;
 	struct in_addr inAddr;
 	int len;
 

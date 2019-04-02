@@ -8,6 +8,7 @@
 #include "http.h"
 #include "constants.h"
 #include<string.h>
+#include<stdlib.h>
 
 #define NEW_LINE "\n"
 #define COLON ":"
@@ -28,13 +29,13 @@ int parse_request(char *request_data, struct http_request *request){
 	//parse first line of request
 	if(strcmp(GET,strtok_r(request_data, SPACE, &overall_save_ptr))){
 		//1st token of first line is method name. only GET is supported.
-		return BAD_REQUEST;
+		return FAILURE;
 	}
 	//2nd token of first line is path
 	request->path=strtok_r(overall_save_ptr, SPACE, &overall_save_ptr);
 	if(strcmp(HTTP_V,strtok_r(overall_save_ptr, NEW_LINE, &overall_save_ptr))){
 		//3rd token of first line is http version number. only http/1.1 is supported.
-		return BAD_REQUEST;
+		return FAILURE;
 	}
 	//parse headers
 	char *header = strtok_r(overall_save_ptr, NEW_LINE, &overall_save_ptr);
@@ -98,6 +99,19 @@ char *status_msg(char *status_code){
 		return "Internal Error";
 	}
 }
+void int_to_string(int num, char *str){
+	int rev=0;
+	while(num>0){
+		rev=rev*10+num%10;
+		num/=10;
+	}
+	char *digits=str;
+	while(rev>0){
+		*digits=rev%10+'0';
+		rev/=10;
+		digits++;
+	}
+}
 int generate_response(struct http_response *response, char *response_data){
 	char *response_ptr=response_data, *status_code=response->status_code;
 	response_ptr=strcpy_return_end(response_ptr,HTTP_V);
@@ -112,7 +126,8 @@ int generate_response(struct http_response *response, char *response_data){
 		response_ptr=strcpy_return_end(response_ptr,CONTENT_LENGTH);
 		response_ptr=strcpy_return_end(response_ptr,COLON);
 		char content_length_str[LENGTH_BUFFER];
-		itoa(response->content_length, content_length_str, 10);
+		int_to_string(response->content_length, content_length_str);
+
 		response_ptr=strcpy_return_end(response_ptr,content_length_str);
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
 
@@ -135,7 +150,7 @@ int generate_response(struct http_response *response, char *response_data){
 		response_ptr=strcpy_return_end(response_ptr,CONTENT_LENGTH);
 		response_ptr=strcpy_return_end(response_ptr,COLON);
 		char content_length_str[LENGTH_BUFFER];
-		itoa(response->content_length, content_length_str, 10);
+		int_to_string(response->content_length, content_length_str);
 		response_ptr=strcpy_return_end(response_ptr,content_length_str);
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
 
