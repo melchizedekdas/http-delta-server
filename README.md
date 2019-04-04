@@ -6,6 +6,6 @@ to compile run the following in src:
 
 keep a version of web-inf folder in the parent directory of src before testing. The name of the folder should be "web-inf".
 
-Two sample versions are given.
+Two sample versions have been given.
 
 to be tested with http-delta-client (https://github.com/melchizedekdas/http-delta-client)
