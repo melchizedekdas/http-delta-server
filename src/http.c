@@ -100,17 +100,16 @@ char *status_msg(char *status_code){
 	}
 }
 void int_to_string(int num, char *str){
-	int rev=0;
-	while(num>0){
-		rev=rev*10+num%10;
+	int digits=0, cpy=num;
+	while(cpy>0){
+		digits++;
+		cpy/=10;
+	}
+	for(int i=digits-1;i>=0;i--){
+		str[i]=num%10+'0';
 		num/=10;
 	}
-	char *digits=str;
-	while(rev>0){
-		*digits=rev%10+'0';
-		rev/=10;
-		digits++;
-	}
+	str[digits]=0;
 }
 int generate_response(struct http_response *response, char *response_data){
 	char *response_ptr=response_data, *status_code=response->status_code;
@@ -140,7 +139,6 @@ int generate_response(struct http_response *response, char *response_data){
 		//Body
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
 		response_ptr=strcpy_return_end(response_ptr,response->body);
-		*response_ptr=0;
 	}
 	else if(!strcmp(status_code,SAME_VERSION)){
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
@@ -163,7 +161,6 @@ int generate_response(struct http_response *response, char *response_data){
 		//Body
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
 		response_ptr=strcpy_return_end(response_ptr,response->body);
-		*response_ptr=0;
 	}
 	else if(!strcmp(status_code,RESOURCE_NOT_FOUND)){
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
@@ -174,6 +171,6 @@ int generate_response(struct http_response *response, char *response_data){
 	else{
 		response_ptr=strcpy_return_end(response_ptr,NEW_LINE);
 	}
-
+	*response_ptr=0;
 	return SUCCESS;
 }

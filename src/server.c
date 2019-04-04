@@ -28,19 +28,33 @@ int main(){
 			printf("Error while receiving data");
 			return FAILURE;
 		}
-		if(parse_request(request_data, &request)){
+
+		//for debug start
+		printf("[request begin]\n%s\n[request end]\n",request_data);
+		fflush(0);
+		//for debug end
+
+		if(parse_request(request_data, &request)==FAILURE){
 			printf("Error while parsing request");
 			return FAILURE;
 		}
-		if(process_request(&request, &response)){
+
+		if(process_request(&request, &response)==FAILURE){
 			printf("Error while processing request");
 			return FAILURE;
 		}
-		if(generate_response(&response, response_data)){
+
+		if(generate_response(&response, response_data)==FAILURE){
 			printf("Error while generating response");
 			return FAILURE;
 		}
-		if(send_response(client_socket, response_data)){
+
+		//for debug start
+		printf("[response begin]\n%s\n[response end]\n",response_data);
+		fflush(0);
+		//for debug end
+
+		if(send_response(client_socket, response_data)==FAILURE){
 			printf("Error while sending data");
 			return FAILURE;
 		}

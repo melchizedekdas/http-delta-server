@@ -12,13 +12,14 @@
 #include <string.h>
 
 int process_request(struct http_request *request, struct http_response *response){
-	char * current_version_id=get_current_version_id(request->path);
+	char *current_version_id=get_current_version_id(request->path);
+
 	if(!current_version_id){
 		//Resource not found
 		response->status_code=RESOURCE_NOT_FOUND;
 		return SUCCESS;
 	}
-	if(!strcmp(current_version_id,request->version_id)){
+	if((request->version_id)&&(!strcmp(current_version_id,request->version_id))){
 		//same version as client cache
 		response->status_code=SAME_VERSION;
 		return SUCCESS;
@@ -34,10 +35,10 @@ int process_request(struct http_request *request, struct http_response *response
 	}
 	//whole resource
 	if((response->content_length=get_resource(request->path, resource_data))>=0){
-		return FAILURE;
+		response->version_id=current_version_id;
+		response->body=resource_data;
+		response->status_code=RESOURCE_FOUND;
+		return SUCCESS;
 	}
-	response->version_id=current_version_id;
-	response->body=resource_data;
-	response->status_code=RESOURCE_FOUND;
-	return SUCCESS;
+	return FAILURE;
 }

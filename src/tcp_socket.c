@@ -70,5 +70,5 @@ int recv_request(int client_socket, char *recv_data, int buffer_size){
 }
 
 int send_response(int client_socket, char *send_data){
-	return send(client_socket, send_data, strlen(send_data), 0);
+	return send(client_socket, send_data, strlen(send_data)+1, 0);
 }

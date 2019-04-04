@@ -11,7 +11,7 @@
 #include "constants.h"
 #include <string.h>
 
-#define RESOURCES_PREFIX "../web-inf"
+#define RESOURCES_PREFIX "../web-inf/"
 
 #define META_SUFFIX "_meta"
 #define META_EXTENSION ".txt"
@@ -31,6 +31,7 @@ char *get_current_version_id(char *resource_path){
 	strcat(file_path,resource_path);
 	strcat(file_path,META_SUFFIX);
 	strcat(file_path,META_EXTENSION);
+
 	FILE *fptr = fopen(file_path, "r");
 	if (fptr == NULL)
 	{
@@ -52,7 +53,6 @@ char *get_current_version_id(char *resource_path){
 }
 
 int get_resource(char *resource_path, char *resource_data){
-	char resource_content[BUFFER_SIZE];
 	// Open file
 	char *file_path=(char *)malloc(sizeof(char)*(strlen(RESOURCES_PREFIX)+strlen(resource_path)+strlen(RESOURCE_EXTENSION)+1));
 	strcpy(file_path,RESOURCES_PREFIX);
@@ -65,16 +65,14 @@ int get_resource(char *resource_path, char *resource_data){
 	}
 	int chars_read=0;
 	// Read contents from file
-	while(fgets(resource_content+chars_read, BUFFER_SIZE-chars_read, fptr)){
-		chars_read+=strlen(resource_content+chars_read);
+	while(fgets(resource_data+chars_read, BUFFER_SIZE-chars_read, fptr)){
+		chars_read+=strlen(resource_data+chars_read);
 	}
 	fclose(fptr);
-	resource_data=resource_content;
 	return chars_read;
 }
 
 int get_resource_parts(char *resource_path, char *cached_version_id, char *resource_data){
-	char resource_content[BUFFER_SIZE];
 	// Open file
 	char *file_path=(char *)malloc(sizeof(char)*(strlen(RESOURCES_PREFIX)+strlen(resource_path)+strlen(RESOURCE_EXTENSION)+1));
 	strcpy(file_path,RESOURCES_PREFIX);
@@ -89,10 +87,9 @@ int get_resource_parts(char *resource_path, char *cached_version_id, char *resou
 	}
 	int chars_read=0;
 	// Read contents from file
-	while(fgets(resource_content+chars_read, BUFFER_SIZE-chars_read, fptr)){
-		chars_read+=strlen(resource_content+chars_read);
+	while(fgets(resource_data+chars_read, BUFFER_SIZE-chars_read, fptr)){
+		chars_read+=strlen(resource_data+chars_read);
 	}
 	fclose(fptr);
-	resource_data=resource_content;
 	return chars_read;
 }
